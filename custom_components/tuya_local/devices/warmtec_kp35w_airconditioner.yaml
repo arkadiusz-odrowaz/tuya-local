@@ -1,0 +1,149 @@
+name: Portable air conditioner
+products:
+  - id: gay9pzalzwnzr2bi
+    manufacturer: Warmtec
+    model: KP35W
+entities:
+  - entity: climate
+    translation_only_key: air_conditioner
+    dps:
+      - id: 1
+        type: boolean
+        name: hvac_mode
+        mapping:
+          - dps_val: false
+            value: "off"
+          - dps_val: true
+            value: cool
+            constraint: mode
+            conditions:
+              - dps_val: "0"
+                value: fan_only
+              - dps_val: "1"
+                value: heat_cool
+              - dps_val: "2"
+                value: dry
+              - dps_val: "3"
+                value: cool
+      - id: 2
+        type: integer
+        name: current_temperature
+      - id: 3
+        type: integer
+        name: current_humidity
+      - id: 5
+        type: string
+        name: mode
+        hidden: true
+      - id: 6
+        type: integer
+        name: temperature
+        unit: C
+        range:
+          min: 18
+          max: 31
+      - id: 8
+        type: string
+        name: fan_mode
+        mapping:
+          - dps_val: "0"
+            value: auto
+          - dps_val: "2"
+            value: low
+          - dps_val: "3"
+            value: high
+      - id: 10
+        type: boolean
+        name: temperature_unit
+        mapping:
+          - dps_val: false
+            value: C
+          - dps_val: true
+            value: F
+      - id: 16
+        type: boolean
+        name: swing_mode
+        mapping:
+          - dps_val: false
+            value: "off"
+          - dps_val: true
+            value: "on"
+      - id: 19
+        type: boolean
+        name: preset_mode
+        mapping:
+          - dps_val: true
+            value: boost
+          - dps_val: false
+            constraint: sleep
+            conditions:
+              - dps_val: false
+                value: comfort
+              - dps_val: true
+                value: sleep
+      - id: 17
+        type: boolean
+        name: sleep
+        hidden: true
+  - entity: select
+    category: config
+    translation_key: temperature_unit
+    dps:
+      - id: 10
+        type: boolean
+        name: option
+        mapping:
+          - dps_val: true
+            value: fahrenheit
+          - dps_val: false
+            value: celsius
+  - entity: binary_sensor
+    class: problem
+    category: diagnostic
+    dps:
+      - id: 15
+        type: bitfield
+        name: sensor
+        mapping:
+          - dps_val: 0
+            value: false
+          - value: true
+      - id: 15
+        type: bitfield
+        name: fault_code
+  - entity: select
+    category: config
+    name: Timer mode
+    dps:
+      - id: 4
+        type: integer
+        name: option
+        mapping:
+          - dps_val: 0
+            value: "None"
+          - dps_val: 1
+            value: "Off timer"
+          - dps_val: 2
+            value: "On timer"
+  - entity: time
+    category: config
+    name: "On timer"
+    translation_key: timer
+    dps:
+      - id: 14
+        type: integer
+        name: minute
+        range:
+          min: 0
+          max: 1440
+  - entity: time
+    category: config
+    name: "Off timer"
+    translation_key: timer
+    dps:
+      - id: 13
+        type: integer
+        name: minute
+        range:
+          min: 0
+          max: 1440
