@@ -70,21 +70,7 @@ entities:
             value: "on"
       - id: 19
         type: boolean
-        name: preset_mode
-        mapping:
-          - dps_val: true
-            value: boost
-          - dps_val: false
-            constraint: sleep
-            conditions:
-              - dps_val: false
-                value: comfort
-              - dps_val: true
-                value: sleep
-      - id: 17
-        type: boolean
-        name: sleep
-        hidden: true
+        name: unknown_19
   - entity: select
     category: config
     translation_key: temperature_unit
@@ -97,6 +83,13 @@ entities:
             value: fahrenheit
           - dps_val: false
             value: celsius
+  - entity: switch
+    category: config
+    translation_key: sleep
+    dps:
+      - id: 17
+        type: boolean
+        name: switch
   - entity: binary_sensor
     class: problem
     category: diagnostic
